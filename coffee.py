@@ -1,9 +1,10 @@
 from order import Order
+
 class Coffee:
     """Represents a coffee item with a name."""
 
     def __init__(self, name: str):
-        """Initialize a Coffee instance with a name."""
+        """Initialize a Coffee instance with a name (minimum 3 characters)."""
         self.name = name
 
     @property
@@ -23,19 +24,19 @@ class Coffee:
         self._name = value
      
     def orders(self):
-        # Get all orders for this coffee
+        """Return all orders for this coffee."""
         return [o for o in Order.all() if o.coffee is self]
 
     def customers(self):
-        # Get unique customers who ordered this coffee
+        """Return unique list of customers who ordered this coffee."""
         return list({o.customer for o in self.orders()})
 
     def num_orders(self):
-        # Count total orders for this coffee
+        """Return total number of orders for this coffee."""
         return len(self.orders())
 
     def average_price(self):
-        # Calculate average price of orders for this coffee
+        """Return average price of all orders for this coffee."""
         orders = self.orders()
         if not orders:
             return 0.0
