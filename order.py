@@ -45,3 +45,5 @@ class Order:
         if not (1.0 <= value <= 10.0):
             raise ValueError("price must be between 1.0 and 10.0")
         self._price = value
+
+    
