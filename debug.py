@@ -2,45 +2,28 @@ from customer import Customer
 from coffee import Coffee
 from order import Order
 
-# Valid customer creation
+Order._all.clear()
+
 alice = Customer("Alice")
-# print(c.name)   
-
-# Test customer validation
-# try:
-#     Customer("")  
-# except ValueError as e:
-#     print("Caught:", e)
-
-# try:
-#     Customer("ThisNameIsWayTooLong")
-# except ValueError as e:
-#     print("Caught:", e)
-
-# Valid coffee creation
 latte = Coffee("Latte")
+
+# Test order creation
+o1 = alice.create_order(latte, 5.0)
+assert o1.customer is alice
+assert o1.coffee is latte
+assert o1.price == 5.0
+
+# Test relationships
+assert alice.orders() == [o1]
+assert alice.coffees() == [latte]
+assert latte.num_orders() == 1
+assert latte.average_price() == 5.0
+
+# Test aficionado
 bob = Customer("Bob")
-espresso = Coffee("Espresso")
-# print(latte.name)  
-
-# Test coffee validation
-# try:
-#     Coffee("Yo")   
-# except ValueError as e:
-#     print("Caught:", e)
-
-# Valid order creation
-alice.create_order(espresso, 3.5)
 bob.create_order(latte, 6.0)
+assert Customer.most_aficionado(latte) is bob
 
-print("Alice orders:", alice.orders())          
-print("Alice coffees:", [c.name for c in alice.coffees()])  
-print("Latte customers:", [c.name for c in latte.customers()])  
-print("Latte num_orders:", latte.num_orders())  
-print("Latte avg price:", latte.average_price()) 
-
-aficionado = Customer.most_aficionado(latte)
-print("Most aficionado for Latte:", aficionado.name)  
 
 
 
