@@ -24,3 +24,14 @@ class Customer:
     def create_order(self, coffee, price):
         from order import Order
         return Order(self, coffee, price)
+    
+    @classmethod
+    def most_aficionado(cls, coffee):
+        from order import Order
+        totals = {}
+        for o in Order.all():
+            if o.coffee is coffee:
+                totals[o.customer] = totals.get(o.customer, 0) + o.price
+        if not totals:
+            return None
+        return max(totals.items(), key=lambda kv: kv[1])[0]
