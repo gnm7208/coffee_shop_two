@@ -13,3 +13,19 @@ class Coffee:
         if len(value) < 3:
             raise ValueError("Coffee name must be at least 3 characters.")
         self._name = value
+    
+    def orders(self):
+        from order import Order
+        return [o for o in Order.all() if o.coffee is self]
+    
+    def customers(self):
+        return list({o.customer for o in self.orders()})
+    
+    def num_orders(self):
+        return len(self.orders())
+    
+    def average_price(self):
+        orders = self.orders()
+        if not orders:
+            return 0.0
+        return sum(o.price for o in orders) / len(orders)
